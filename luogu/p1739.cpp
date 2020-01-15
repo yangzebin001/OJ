@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-02 21:17:02
  * @LastEditors: BeckoninGshy
- * @LastEditTime: 2019-12-02 21:20:01
+ * @LastEditTime: 2019-12-16 09:57:14
  */
 #include<iostream>
 #include<cstdio>
@@ -11,7 +11,7 @@ int main(){
     char c;
     int sum = 0;
     while(scanf("%c",&c) && c !='@'){
-        if(c == '(') sum ++;
+        if(c == '(') sum++;
         if(c == ')') sum--;
         if(sum < 0){
             printf("NO");

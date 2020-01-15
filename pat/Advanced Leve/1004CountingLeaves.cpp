@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-10-12 14:43:56
- * @LastEditors: BeckoninGshy
- * @LastEditTime: 2019-10-12 15:13:54
+ * @LastEditors  : BeckoninGshy
+ * @LastEditTime : 2020-01-15 16:40:14
  */
 #include<iostream>
 #include<cstdio>
@@ -28,7 +28,7 @@ void bfs(){
             int a = q.front(); q.pop();
             if(node[a].sub.empty()) cnt++;
             for(int i = 0; i < node[a].sub.size(); i++){
-                q.push(node[a].sub[i]);
+                q.push(node[a].sub[i]); 
             }
         }
         ans.push_back(cnt);
