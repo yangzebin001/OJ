@@ -1,83 +1,81 @@
 /*
  * @Date: 2019-08-19 11:49:38
- * @LastEditors  : BeckoninGshy
- * @LastEditTime : 2020-01-15 11:57:28
+ * @LastEditors: BeckoninGshy
+ * @LastEditTime: 2020-01-25 21:31:32
  */
-#include <iostream>
-#include <string>
-#include <cstring>
-#include <queue>
-#include <map>
-#define maxn 15
+#include<cstdio>
+#include<algorithm>
 using namespace std;
-struct node{//方便搜索，也可以使用pair简化
-    string str;
-    int step;
-};
-
-string a,b;
-string orginal[maxn];
-string translated[maxn];
-int n,ans;
-map<string,int> ma;//很重要的东西，用来判重，否则会TLE在第3点和第5点
-
-string trans(const string &str,int i,int j){//借鉴了stdcall大爷的思想
-    string ans = "";
-    if (i+orginal[j].length() > str.length())
-        return ans;
-
-    for (int k=0; k < orginal[j].length();k++)
-        if (str[i+k] != orginal[j][k])
-            return ans;
-
-    ans = str.substr(0,i);
-    ans+=translated[j];
-    ans+=str.substr(i+orginal[j].length());
-    return ans;
-}
-
-void bfs(){//一个平淡无奇的bfs过程
-    queue <node> q;
-    node s;
-    s.str = a;
-    s.step = 0;
-    q.push(s);
-
-    while (!q.empty()){
-        node u = q.front();
-        q.pop();
-        string temp;
-
-        if(ma.count(u.str) == 1) //剪枝，判断重复的路径
-            continue;
-
-        if (u.str == b){
-            ans = u.step;
-            break;
-        }
-        ma[u.str] = 1;
-        for (int i=0;i < u.str.length();i++)//枚举当前串所有可能位置
-            for (int j=0; j<n; j++){//枚举所有可能手段
-                temp = trans(u.str,i,j);
-                if (temp != ""){
-                    node v;
-                    v.str = temp;
-                    v.step = u.step+1;
-                    q.push(v);
-                }
-            }
+#define maxn 30
+int a[maxn],b[maxn],c[maxn];
+int num[maxn],Next[maxn],n,cnt;
+char s1[maxn],s2[maxn],s3[maxn];
+bool used[maxn];
+bool Judge() {
+    for(int i=n-1,x=0;i>=0;i--) {
+        int A=num[a[i]],B=num[b[i]],C=num[c[i]];
+        if((A+B+x)%n!=C) return false;
+        x=(A+B+x)/n;
     }
-    if (ans > 10 || ans == 0)
-        cout << "NO ANSWER!" << endl;
-    else
-        cout << ans << endl;
-
+    return true;
 }
-
-int main(){
-    freopen("in.txt","r",stdin);
-    string a = "abcds";
-    a.replace(2,3,"ccc");
-    cout << a;
+bool CanPrune() {//prune: 剪枝—百度翻译。
+    if(num[a[0]]+num[b[0]]>=n)
+        return true;
+    for(int i=n-1;i>=0;i--) {
+        int A=num[a[i]],B=num[b[i]],C=num[c[i]];
+        if(A==-1||B==-1||C==-1) continue;
+        if((A+B)%n!=C&&(A+B+1)%n!=C)
+            return true;
+    }
+    return false;
+}
+void Print() {
+    for(int i=0;i<n;i++)
+        printf("%d ",num[i]);
+    exit(0);
+}
+void dfs(int x) {
+    if(CanPrune()==true) return;
+    if(x==n) {
+        if(Judge()==true) Print();
+        return;
+    }
+    for(int i=n-1;i>=0;i--)
+        if(used[i]==false) {
+            num[Next[x]]=i;
+            used[i]=true;
+            dfs(x+1);
+            num[Next[x]]=-1;
+            used[i]=false;
+        }
+    return;
+}
+inline int id(char c) {
+    return c-'A';
+}
+void GetNext(int x) {
+    if(used[x]==false) {
+        used[x]=true;
+        Next[cnt++]=x;
+    }
+    return;
+}
+int main() {
+    scanf("%d",&n);
+    scanf("%s%s%s",s1,s2,s3);
+    for(int i=0;i<n;i++) {
+        a[i]=id(s1[i]);
+        b[i]=id(s2[i]);
+        c[i]=id(s3[i]);
+        num[i]=-1;
+    }
+    for(int i=n-1;i>=0;i--) {
+        GetNext(a[i]);
+        GetNext(b[i]);
+        GetNext(c[i]);
+    }
+    for(int i=0;i<n;i++) used[i]=false;
+    dfs(0);
     return 0;
 }

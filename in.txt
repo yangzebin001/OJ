@@ -1,4 +1,3 @@
-abcd abcd
-abc xu
-ud y
-y yz
+abcbabcbabcba
+abacacbaaaab
+END
