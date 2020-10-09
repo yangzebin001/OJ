@@ -4,7 +4,7 @@
 		{
 			"type": "shell",
 			"label": "task g++", 
-			"command":  "E:\\mingw64\\bin\\g++.exe",
+			"command":  "D:\\dev_env\\mingw64\\bin\\g++.exe",
 			"args": [
 				"-g",
 				"${file}",
@@ -12,12 +12,16 @@
 				"${fileDirname}\\${fileBasenameNoExtension}.exe"
 			],
 			"options": {
-				"cwd": "E:\\mingw64\\bin"
+				"cwd": "D:\\dev_env\\mingw64\\bin"
 			},
 			"problemMatcher": [
 				"$gcc"
 			],
-			"group": "build"
+			"group": {
+                "kind": "build",
+                "isDefault": true
+            }
+			
 		}
 	]
 }

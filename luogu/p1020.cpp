@@ -21,7 +21,7 @@ bool cmp(int a,int b){ return a > b;}
 int main(){
     // t = 1;
     // len1 = len2 = 1;
-    freopen("in.txt","r",stdin);
+    // freopen("in.txt","r",stdin);
     while(scanf("%d",&arr[t]) != EOF) t++;
     dp1[0] = dp2[0] = arr[0]; 
     for(int i = 1; i < t; i++){
