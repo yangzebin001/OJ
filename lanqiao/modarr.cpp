@@ -1,24 +1,32 @@
+/*
+ * @Author: BeckoninGshy 
+ * @Date: 2020-10-10 14:15:08 
+ * @Last Modified by:   BeckoninGshy 
+ * @Last Modified time: 2020-10-10 14:15:08 
+ */
 #include<iostream>
 #include<algorithm>
-#include<set>
+#include<cstdio>
 using namespace std;
-int n,a;
-set<int> s;
-set<int>::iterator it;
+const int N = 100010, M = 1100010;
+int f[M];
+int n;
+int getf(int x){
+    return f[x] == x ? x : f[x] = getf(f[x]);
+}
 int main(){
-    cin >> n;
-    for(int i = 1; i <= 2*1000000; i++) s.insert(i);
-    for(int i = 1; i <= n; i++){
-        if(i > 1) cout << " ";
-        cin >> a;
-        if(s.count(a)){
-            cout << a;
-            s.erase(a);
-        }else{
-            it = s.lower_bound(a);
-            cout << *it;
-            s.erase(it);
-        }
+    int n;
+    scanf("%d",&n);
+    for(int i = 0; i <= M; i++){
+        f[i] = i;
     }
+    for(int i = 0; i < n; i++){
+        int x;
+        scanf("%d",&x);
+        x = getf(x);
+        printf("%d ",x);
+        f[x] = x+1;
+    }
+
     return 0;
 }
