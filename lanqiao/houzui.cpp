@@ -5,30 +5,24 @@ using namespace std;
 int a[1000010];
 int n,m;
 
-bool cmp(int a, int b){
-    return abs(a) > abs(b);
-}
-
 int main(){
     cin >> n >> m;
     int len = n+m+1;
     for(int i = 0; i < len; i++){
         cin >> a[i];
     }
-    sort(a,a+len, cmp);
-    for(int i = 0; i < len && m; i++){
-        if(a[i] < 0){
-            a[i] = -a[i];
-            m--;
+    sort(a,a+len);
+    if(a[0] >= 0 && m) a[0] = -a[0]; 
+    else{
+
+        for(int i = 0; i < len && m; i++){
+            if(a[i] < 0){
+                a[i] = -a[i];
+                m--;
+            }
         }
     }
 
-    if(m){
-        for(int i = len-1; i >= 0 && m; i--){
-            a[i] = -a[i];
-            m--;
-        }
-    }
     long long ans = 0;
     for(int i = 0; i < len; i++) ans += a[i];
     
