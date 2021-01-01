@@ -32,3 +32,4 @@ pat/Llxy_AlgorithmDesign_programming_test
 *.out
 *.app
 .history
+.vscode
